@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "car_service", "car_service\car_service.csproj", "{B1A40015-D84A-44A0-8535-57CCC35CB5E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfDbCarService", "EfDbCarService\EfDbCarService.csproj", "{0606BA34-1C43-4E45-BEBC-AC653AEA20B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1A40015-D84A-44A0-8535-57CCC35CB5E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A40015-D84A-44A0-8535-57CCC35CB5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A40015-D84A-44A0-8535-57CCC35CB5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A40015-D84A-44A0-8535-57CCC35CB5E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0606BA34-1C43-4E45-BEBC-AC653AEA20B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0606BA34-1C43-4E45-BEBC-AC653AEA20B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0606BA34-1C43-4E45-BEBC-AC653AEA20B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0606BA34-1C43-4E45-BEBC-AC653AEA20B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10B7034A-5083-4657-8551-E3C999738F02}
+	EndGlobalSection
+EndGlobal

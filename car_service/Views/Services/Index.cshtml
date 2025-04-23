@@ -1,0 +1,29 @@
+﻿@using car_service.Models
+@model List<Service>
+
+@{
+    ViewData["Title"] = "Список сервисов";
+}
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название услуги</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Id</td>
+                <td>@service.ServiceName</td>
+                <td>@service.Price.ToString("C")</td> 
+            </tr>
+        }
+        <p>Количество записей: @ViewBag.Count</p>
+    </tbody>
+</table>
+
