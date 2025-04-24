@@ -6,7 +6,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CarServiceDbContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
-builder.Services.AddScoped<IServicesRepository, ServicesDbRepository>();
+builder.Services.AddTransient<IServicesRepository, ServicesDbRepository>();
 
 var app = builder.Build();
 
@@ -27,6 +27,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Services}/{action=Index}/{id?}");
 
 app.Run();
