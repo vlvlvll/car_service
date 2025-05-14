@@ -1,0 +1,26 @@
+﻿@model List<EfDbCarService.Service>
+
+@{
+    ViewData["Title"] = "Список услуг";
+}
+
+<h2>Список услуг</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название услуги</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ServiceName</td>
+                <td>@item.Price.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

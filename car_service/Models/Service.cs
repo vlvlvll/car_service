@@ -10,7 +10,7 @@ namespace car_service
     public class Service
     {
         [Key]
-        public int Id { get; set; }
+        public int ServiceID { get; set; }
         public string ServiceName {  get; set; }
         public decimal Price { get; set; }
     }

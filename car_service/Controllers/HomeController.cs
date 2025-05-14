@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using car_service.Models;
+using EfDbCarService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace car_service.Controllers
@@ -7,15 +8,19 @@ namespace car_service.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IServicesRepository servicesDbRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IServicesRepository serviceDbRepository)
         {
-            _logger = logger;
+            this.servicesDbRepository = serviceDbRepository;
         }
+
 
         public IActionResult Index()
         {
-            return View();
+            var services = servicesDbRepository.GetAll();
+            ViewBag.Count = services.Count;
+            return View(services);
         }
 
         public IActionResult Privacy()
