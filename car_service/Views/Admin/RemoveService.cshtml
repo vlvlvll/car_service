@@ -1,0 +1,40 @@
+﻿@model List<EfDbCarService.Service>
+
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Удалить услугу";
+}
+
+<h2 class="mb-4">Удалить услугу</h2>
+
+<table class="table table-bordered text-center align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Фото</th>
+            <th>Название</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@service.ImagePath" alt="Фото @service.ServiceName"
+                         style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />
+                </td>
+                <td>@service.ServiceName</td>
+                <td>@service.Price.ToString("C")</td>
+                <td>
+                    <form asp-action="DeleteService" method="post">
+                        <input type="hidden" name="id" value="@service.ServiceID" />
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

@@ -2,17 +2,11 @@
 
 @{
     ViewData["Title"] = "Список сервисов";
-
-    var imageMap = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-    {
-        { "покраска", "/images/paint.jpg" },
-        { "смена тормозов", "/images/brakes.jpg" }
-    };
 }
 
 <h2 class="mb-4">@ViewData["Title"]</h2>
 
-<p><strong>Количество записей:</strong> @ViewBag.Count</p>
+<p><strong>Количество записей:</strong> @Model.Count</p>
 
 <table class="table table-hover table-bordered text-center align-middle">
     <thead class="table-dark">
@@ -25,20 +19,21 @@
     <tbody>
         @foreach (var service in Model)
         {
-            string imageUrl = imageMap.ContainsKey(service.ServiceName)
-            ? imageMap[service.ServiceName]
-            : "/images/no-image.png"; // изображение по умолчанию
+            // Используем путь из базы, если есть, иначе картинку-заглушку
+            string imageUrl = !string.IsNullOrEmpty(service.ImagePath)
+            ? "/" + service.ImagePath.TrimStart('/')
+            : "/images/no-image.png";
 
             <tr>
                 <td>
                     <img src="@imageUrl" alt="Фото @service.ServiceName"
                          style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />
                 </td>
-                
                 <td>@service.ServiceName</td>
                 <td>@service.Price.ToString("C")</td>
             </tr>
         }
     </tbody>
 </table>
+
 

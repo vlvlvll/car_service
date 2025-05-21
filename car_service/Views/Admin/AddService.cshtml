@@ -1,30 +1,41 @@
 ﻿@model EfDbCarService.Service
 
 @{
+    Layout = "AdminLayout";
     ViewData["Title"] = "Добавить услугу";
 }
 
 <h2>Добавить услугу</h2>
 
-<form asp-action="AddService" method="post">
-    <div class="form-group">
+<form asp-action="AddService" method="post" enctype="multipart/form-data">
+    <div class="form-group mb-3">
         <label asp-for="ServiceName" class="control-label"></label>
         <input asp-for="ServiceName" class="form-control" />
         <span asp-validation-for="ServiceName" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="Price" class="control-label"></label>
         <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Сохранить</button>
+    <div class="form-group mb-3">
+        <label for="imageFile" class="control-label">Изображение</label>
+        <input type="file" name="imageFile" id="imageFile" class="form-control" required />
+        <span class="text-danger">
+            @Html.ValidationMessage("ImageFile")
+        </span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
+
+
+
+
 

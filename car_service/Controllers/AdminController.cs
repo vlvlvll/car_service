@@ -1,4 +1,5 @@
 ﻿using EfDbCarService;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,13 @@ namespace car_service.Controllers
     {
         // GET: AdminController
         private readonly CarServiceDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(CarServiceDbContext context)
+
+        public AdminController(CarServiceDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
        
         [HttpGet]
@@ -21,19 +25,48 @@ namespace car_service.Controllers
         {
             return View();
         }
-        [HttpPost]
+        
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddService(EfDbCarService.Service service)
+        [HttpPost]
+        public async Task<IActionResult> AddService(EfDbCarService.Service service, IFormFile? imageFile)
         {
-            if (ModelState.IsValid)
+            if (imageFile == null || imageFile.Length == 0)
             {
-                _context.Services.Add(service);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("ServiceList"); // или другой экшен
+                ModelState.AddModelError("ImageFile", "Пожалуйста, добавьте фото услуги.");
+                return View(service); // вернём форму обратно с ошибкой
             }
 
-            return View(service); // если есть ошибки, отобразим форму снова
+            if (!ModelState.IsValid)
+            {
+                return View(service);
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/services");
+                    Directory.CreateDirectory(uploadsFolder); // на случай, если папка не существует
+
+                    var fileName = Path.GetFileName(imageFile.FileName);
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    service.ImagePath = "/images/services/" + fileName;
+                }
+
+                _context.Services.Add(service);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ServiceList");
+            }
+
+            return View(service);
         }
+
 
         // Просмотр всех услуг (опционально)
         public async Task<IActionResult> ServiceList()
@@ -42,6 +75,27 @@ namespace car_service.Controllers
             return View(services);
         }
 
+        [HttpGet]
+        public IActionResult RemoveService()
+        {
+            var services = _context.Services.ToList();
+            return View(services);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteService(int id)
+        {
+            var service = _context.Services.FirstOrDefault(s => s.ServiceID == id);
+            if (service != null)
+            {
+                _context.Services.Remove(service);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("RemoveService");
+        }
+
+
 
 
         public ActionResult Index()
@@ -49,73 +103,8 @@ namespace car_service.Controllers
             return View();
         }
 
-        // GET: AdminController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        
 
-        // GET: AdminController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AdminController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

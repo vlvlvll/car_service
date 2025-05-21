@@ -20,7 +20,7 @@ namespace EfDbCarService
 
         public CarServiceDbContext(DbContextOptions<CarServiceDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
     }
 }
