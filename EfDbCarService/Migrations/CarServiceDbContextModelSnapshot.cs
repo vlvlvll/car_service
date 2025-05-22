@@ -138,6 +138,9 @@ namespace EfDbCarService.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<decimal>("Price2")
+                        .HasColumnType("decimal(65,30)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Parts");
@@ -174,6 +177,9 @@ namespace EfDbCarService.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ServiceID"));
 
                     b.Property<string>("ImagePath")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagePath2")
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("Price")
