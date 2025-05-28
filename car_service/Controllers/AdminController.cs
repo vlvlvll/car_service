@@ -33,7 +33,7 @@ namespace car_service.Controllers
             if (imageFile == null || imageFile.Length == 0)
             {
                 ModelState.AddModelError("ImageFile", "Пожалуйста, добавьте фото услуги.");
-                return View(service); // вернём форму обратно с ошибкой
+                return View(service); 
             }
 
             if (!ModelState.IsValid)
@@ -46,7 +46,7 @@ namespace car_service.Controllers
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/services");
-                    Directory.CreateDirectory(uploadsFolder); // на случай, если папка не существует
+                    Directory.CreateDirectory(uploadsFolder); 
 
                     var fileName = Path.GetFileName(imageFile.FileName);
                     var filePath = Path.Combine(uploadsFolder, fileName);
@@ -68,10 +68,12 @@ namespace car_service.Controllers
         }
 
 
-        // Просмотр всех услуг (опционально)
+        
         public async Task<IActionResult> ServiceList()
         {
             var services = await _context.Services.ToListAsync();
+            Console.WriteLine($"Type of services: {services.FirstOrDefault()?.GetType().FullName}");
+
             return View(services);
         }
 
@@ -94,6 +96,59 @@ namespace car_service.Controllers
 
             return RedirectToAction("RemoveService");
         }
+
+
+        // GET: Admin/EditService/5
+        [HttpGet]
+        public async Task<IActionResult> EditService(int id)
+        {
+            var service = await _context.Services.FirstOrDefaultAsync(s => s.ServiceID == id);
+            Console.WriteLine($"ID: {id}");
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+            return View(service);
+        }
+
+        // POST: Admin/EditService
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditService(EfDbCarService.Service service, IFormFile imageFile)
+        {
+                if (!ModelState.IsValid)
+                return View(service);
+
+            var existingService = await _context.Services.FindAsync(service.ServiceID);
+            if (existingService == null)
+                return NotFound();
+
+            existingService.ServiceName = service.ServiceName;
+            existingService.Price = service.Price;
+
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/services");
+                Directory.CreateDirectory(uploadsFolder); 
+
+                var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+
+                existingService.ImagePath = "/images/services/" + uniqueFileName;
+            }
+
+            _context.Services.Update(existingService);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("RemoveService");
+        }
+
 
 
 

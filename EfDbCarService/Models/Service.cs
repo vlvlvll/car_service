@@ -17,5 +17,6 @@ namespace EfDbCarService
         public string? ImagePath { get; set; }
 
 
+
     }
 }

@@ -13,6 +13,7 @@
             <th>Фото</th>
             <th>Название услуги</th>
             <th>Цена</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -25,9 +26,22 @@
                 </td>
                 <td>@item.ServiceName</td>
                 <td>@item.Price.ToString("C")</td>
+                <td>
+                    <div class="d-flex flex-column gap-2">
+                        <a asp-action="EditService" asp-route-id="@item.ServiceID" class="btn btn-warning btn-sm w-100">
+                            Изменить
+                        </a>
+                        <form asp-action="DeleteService" asp-route-id="@item.ServiceID" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту услугу?');" class="w-100">
+                            <button type="submit" class="btn btn-danger btn-sm w-100">Удалить</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
 
 
