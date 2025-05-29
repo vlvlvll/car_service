@@ -1,0 +1,56 @@
+﻿@model SignUpViewModel
+
+@{
+    ViewData["Title"] = "Запись на сервис";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<form asp-action="SignUpToService" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="ServiceId" />
+    <input type="hidden" asp-for="ServicePrice" />
+    <input type="hidden" asp-for="ServiceName" />
+
+    <div class="mb-3">
+        <label class="form-label">Сервис</label>
+        <input class="form-control" value="@Model.ServiceName" readonly style="pointer-events: none;" />
+    </div>
+
+    <h4>Данные клиента</h4>
+    <div class="mb-3">
+        <label class="form-label">ФИО</label>
+        <input class="form-control" asp-for="FullName" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Телефон</label>
+        <input class="form-control" asp-for="PhoneNumber" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <h4>Данные автомобиля</h4>
+    <div class="mb-3">
+        <label class="form-label">Марка</label>
+        <input class="form-control" asp-for="Brand" />
+        <span asp-validation-for="Brand" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Модель</label>
+        <input class="form-control" asp-for="Model" />
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">VIN</label>
+        <input class="form-control" asp-for="VIN" />
+        <span asp-validation-for="VIN" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Записаться</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

@@ -9,11 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CarServiceDbContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 builder.Services.AddTransient<IServicesRepository, ServicesDbRepository>();
-builder.Services.AddDbContext<CarServiceDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
-    ));
+
 
 var app = builder.Build();
 

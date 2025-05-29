@@ -45,7 +45,22 @@
         font-size: 1rem;
         color: #28a745;
         font-weight: 500;
+        margin-bottom: 12px;
     }
+
+    .book-button {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .book-button:hover {
+            background-color: #0056b3;
+        }
 </style>
 
 <div class="container">
@@ -62,12 +77,14 @@
                     <div class="product-info">
                         <div class="product-name">@service.ServiceName</div>
                         <div class="product-price">@service.Price.ToString("C")</div>
+                        <a href="@Url.Action("SignUpToService", "Services", new { id = service.ServiceID })" class="book-button">Записаться</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+
 
 
 
