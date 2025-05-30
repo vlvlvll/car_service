@@ -26,7 +26,7 @@ namespace car_service.Models
         public string Brand { get; set; }
 
         [Required]
-        public string Model { get; set; }
+        public string Model2 { get; set; }
 
         [Required]
         public string VIN { get; set; }

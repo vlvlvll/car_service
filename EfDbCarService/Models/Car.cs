@@ -12,7 +12,7 @@ namespace EfDbCarService
         [Key]
         public int CarId {  get; set; }
         public string Brand { get; set; }
-        public string Model { get; set; }
+        public string Model2 { get; set; }
         public string VIN { get; set; }
 
         public Client Client{ get; set; }

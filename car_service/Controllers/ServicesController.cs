@@ -83,7 +83,7 @@ namespace car_service.Controllers
                 var car = new EfDbCarService.Car
                 {
                     Brand = model.Brand,
-                    Model = model.Model,
+                    Model2 = model.Model2,
                     VIN = model.VIN,
                     ClientId = client.ClientId
                 };
@@ -102,7 +102,7 @@ namespace car_service.Controllers
                 _context.SaveChanges();
                 Console.WriteLine($"Добавлен заказ ID: {order.Id}");
 
-                return RedirectToAction("Confirmation");
+                return RedirectToAction("Success");
             }
             catch (Exception ex)
             {

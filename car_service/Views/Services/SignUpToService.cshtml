@@ -7,16 +7,14 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 
 <form asp-action="SignUpToService" method="post">
-    @Html.AntiForgeryToken()
-
     <input type="hidden" asp-for="ServiceId" />
     <input type="hidden" asp-for="ServicePrice" />
     <input type="hidden" asp-for="ServiceName" />
 
-    <div class="mb-3">
+    @* <div class="mb-3">
         <label class="form-label">Сервис</label>
         <input class="form-control" value="@Model.ServiceName" readonly style="pointer-events: none;" />
-    </div>
+    </div> *@
 
     <h4>Данные клиента</h4>
     <div class="mb-3">
@@ -38,8 +36,8 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Модель</label>
-        <input class="form-control" asp-for="Model" />
-        <span asp-validation-for="Model" class="text-danger"></span>
+        <input class="form-control" asp-for="Model2" />
+        <span asp-validation-for="Model2" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label class="form-label">VIN</label>
