@@ -13,7 +13,7 @@ namespace car_service.Models
         public string ServiceName { get; set; }
         public decimal ServicePrice { get; set; }
 
-        // Client Info
+        
         [Required]
         public string FullName { get; set; }
 
@@ -21,12 +21,12 @@ namespace car_service.Models
         [Phone]
         public string PhoneNumber { get; set; }
 
-        // Car Info
+        
         [Required]
         public string Brand { get; set; }
 
         [Required]
-        public string Model2 { get; set; }
+        public string Version { get; set; }
 
         [Required]
         public string VIN { get; set; }

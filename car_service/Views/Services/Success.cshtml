@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Успешная запись";
+    
+}
+
+<div class="text-center mt-5">
+    <h2>Вы успешно записались на услугу!
+        Наш менеджер свяжется с вами для уточнения деталей
+    </h2>
+    <p>Сейчас вы будете перенаправлены на главную страницу...</p>
+</div>
+
+<script>
+    setTimeout(function () {
+        window.location.href = '@Url.Action("Index", "Home")';
+    }, 2000); 
+</script>
+

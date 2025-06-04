@@ -1,0 +1,51 @@
+﻿@model List<car_service.Models.ClientInfoViewModel>
+
+@{
+    Layout = "AdminLayout";
+    ViewData["Title"] = "Список клиентов";
+}
+
+<h2>Список клиентов</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@foreach (var client in Model)
+{
+    <div class="card p-3 mb-3">
+        <h4>@client.FullName</h4>
+        <p>Телефон: @client.PhoneNumber</p>
+
+        <h5>Машины:</h5>
+        <ul>
+            @foreach (var car in client.Cars)
+            {
+                <li>@car.Brand @car.Version — VIN: @car.VIN</li>
+            }
+        </ul>
+
+        <h5>Заказы:</h5>
+        <ul>
+            @foreach (var order in client.Orders)
+            {
+                <li>Сумма: @order.TotalPrice ₽</li>
+            }
+        </ul>
+
+        <div class="mt-2 d-flex gap-2">
+            <a href="@Url.Action("EditClient", "Admin", new { id = client.ClientId })" class="btn btn-sm btn-primary">
+                Изменить
+            </a>
+
+            <form asp-action="DeleteClient" asp-controller="Admin" asp-route-id="@client.ClientId" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить этого клиента?');">
+                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+            </form>
+        </div>
+    </div>
+}
+
+

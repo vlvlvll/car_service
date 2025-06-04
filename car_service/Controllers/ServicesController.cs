@@ -45,10 +45,8 @@ namespace car_service.Controllers
         [HttpPost]
         public IActionResult SignUpToService(SignUpViewModel model)
         {
-            Console.WriteLine("Начало обработки формы");
-            Console.WriteLine($"Данные модели: {JsonSerializer.Serialize(model)}");
 
-            // Заполняем Service данные
+
             var service = _context.Services.FirstOrDefault(s => s.ServiceID == model.ServiceId);
             if (service != null)
             {
@@ -56,7 +54,6 @@ namespace car_service.Controllers
                 model.ServicePrice = service.Price;
             }
 
-            // Валидация
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("Ошибки валидации:");
@@ -69,7 +66,6 @@ namespace car_service.Controllers
 
             try
             {
-                // Клиент
                 var client = new EfDbCarService.Client
                 {
                     FullName = model.FullName,
@@ -79,11 +75,10 @@ namespace car_service.Controllers
                 _context.SaveChanges();
                 Console.WriteLine($"Добавлен клиент ID: {client.ClientId}");
 
-                // Автомобиль
                 var car = new EfDbCarService.Car
                 {
                     Brand = model.Brand,
-                    Model2 = model.Model2,
+                    Version = model.Version,
                     VIN = model.VIN,
                     ClientId = client.ClientId
                 };
@@ -91,7 +86,6 @@ namespace car_service.Controllers
                 _context.SaveChanges();
                 Console.WriteLine($"Добавлен автомобиль ID: {car.CarId}");
 
-                // Заказ
                 var order = new EfDbCarService.Order
                 {
                     ClientId = client.ClientId,
@@ -102,7 +96,7 @@ namespace car_service.Controllers
                 _context.SaveChanges();
                 Console.WriteLine($"Добавлен заказ ID: {order.Id}");
 
-                return RedirectToAction("Success");
+                return View("Success");
             }
             catch (Exception ex)
             {
