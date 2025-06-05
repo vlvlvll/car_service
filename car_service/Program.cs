@@ -1,4 +1,6 @@
 using EfDbCarService;
+using EfDbCarService.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -9,7 +11,26 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CarServiceDbContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 builder.Services.AddTransient<IServicesRepository, ServicesDbRepository>();
+builder.Services.AddDbContext<IdentityContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? throw new InvalidOperationException("DefaultConnection is missing."),
+        ServerVersion.AutoDetect(connection)));
 
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<IdentityContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(8);
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.Cookie = new CookieBuilder
+    {
+        IsEssential = true
+    };
+}
+);
 
 var app = builder.Build();
 
@@ -23,10 +44,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

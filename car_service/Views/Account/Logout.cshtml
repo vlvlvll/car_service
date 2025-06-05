@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Выход из системы";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Вы уверены, что хотите выйти из системы?</p>
+
+<form asp-action="LogoutConfirmed" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Да, выйти</button>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Отмена</a>
+</form>
