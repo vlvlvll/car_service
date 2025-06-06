@@ -14,8 +14,8 @@ namespace EfDbCarService
     {
         public static void Initialize (UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var adminEmail = "amdin@gmail.com";
-            var password = "123456";
+            var adminEmail = "admin@gmail.com";
+            var password = "123456Aa/";
             if (roleManager.FindByNameAsync(Constants.AdminRoleName).Result == null)
             {
                 roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName)).Wait();

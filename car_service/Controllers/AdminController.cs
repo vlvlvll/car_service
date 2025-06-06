@@ -1,5 +1,6 @@
 ﻿using car_service.Models;
 using EfDbCarService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using System;
 
 namespace car_service.Controllers
 {
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class AdminController : Controller
     {
         // GET: AdminController

@@ -17,8 +17,10 @@ builder.Services.AddDbContext<IdentityContext>(options =>
         ?? throw new InvalidOperationException("DefaultConnection is missing."),
         ServerVersion.AutoDetect(connection)));
 
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<IdentityContext>();
+
+
+    builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<IdentityContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -34,8 +36,16 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+using (var serviceScope = app.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    IdentityInitializator.Initialize(userManager, rolesManager);
+}
+
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.

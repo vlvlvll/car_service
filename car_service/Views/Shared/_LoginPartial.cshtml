@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@using EfDbCarService.Models
+@inject SignInManager<EfDbCarService.Models.User> SignInManager
+@inject UserManager<EfDbCarService.Models.User> UserManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))

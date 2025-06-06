@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
-using User = car_service.Models.User;
+using User = EfDbCarService.Models.User;
+
 
 namespace car_service.Controllers
 {
@@ -50,9 +51,9 @@ namespace car_service.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            return View();
         }
 
         [HttpPost]
@@ -82,8 +83,6 @@ namespace car_service.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

@@ -14,7 +14,7 @@ namespace EfDbCarService
         {
             var optionsBuilder = new DbContextOptionsBuilder<CarServiceDbContext>();
             optionsBuilder.UseMySql(
-                "server=localhost;port=3306;user=root;password=2v7v6v2v;database=car_service",
+                "server=localhost;port=3306;user=root;password=Aa123456;database=car_service",
                 new MySqlServerVersion(new Version(8, 0, 32))
             );
 
