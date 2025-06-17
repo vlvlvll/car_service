@@ -12,7 +12,7 @@ namespace car_service.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class AdminController : Controller
     {
-        // GET: AdminController
+        
         private readonly CarServiceDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -29,7 +29,7 @@ namespace car_service.Controllers
             return View();
         }
         
-        [ValidateAntiForgeryToken]
+        
         [HttpPost]
         public async Task<IActionResult> AddService(EfDbCarService.Service service, IFormFile? imageFile)
         {
@@ -101,7 +101,6 @@ namespace car_service.Controllers
         }
 
 
-        // GET: Admin/EditService/5
         [HttpGet]
         public async Task<IActionResult> EditService(int id)
         {
@@ -115,9 +114,9 @@ namespace car_service.Controllers
             return View(service);
         }
 
-        // POST: Admin/EditService
+        
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> EditService(EfDbCarService.Service service, IFormFile imageFile)
         {
                 if (!ModelState.IsValid)
@@ -177,7 +176,7 @@ namespace car_service.Controllers
             return View(viewModel);
         }
 
-        // POST: Admin/EditClient
+        
         [HttpPost]
         public async Task<IActionResult> EditClient(EditClientViewModel model)
         {

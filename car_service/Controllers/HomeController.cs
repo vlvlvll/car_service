@@ -7,7 +7,6 @@ namespace car_service.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IServicesRepository servicesDbRepository;
 
         public HomeController(IServicesRepository serviceDbRepository)

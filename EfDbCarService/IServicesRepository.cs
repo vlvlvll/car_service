@@ -13,7 +13,6 @@ namespace EfDbCarService
             void Delete(Service service);
             List<Service> GetAll();
             Service TryGetById(int id);
-           // public void Update(Service service, string title, string description);
         
     }
 }
