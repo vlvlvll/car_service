@@ -8,7 +8,7 @@ Backend:
 4)ASP.NET Core Identity - система аутентификации и авторизации
 
 Frontend:
-1)Razor Pages - технология представлений
+1)Razor Pages  - технология представлений
 2)Bootstrap - CSS-фреймворк
 3)HTML/CSS/JavaScript - клиентская сторона
 
